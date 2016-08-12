@@ -24,9 +24,7 @@ import android.accounts.AccountManager;
 import android.accounts.AccountManagerFuture;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -43,11 +41,9 @@ import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.TextDrawable;
-import com.owncloud.android.utils.BitmapUtils;
 import com.owncloud.android.utils.DisplayUtils;
 
 /**
@@ -208,19 +204,13 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
                             case R.id.nav_all_files:
                                 menuItem.setChecked(true);
                                 mCheckedMenuItem = menuItem.getItemId();
-
-                                allFilesOption();
-                                // TODO activate when On Device branch is merged
-                                // MainApp.showOnlyFilesOnDevice(false);
-                                // refreshDirectory();
+                                showFiles(false);
                                 break;
-                            // TODO activate when On Device branch is merged
-                            // case R.id.nav_on_device:
-                            //     menuItem.setChecked(true);
-                            //     mCheckedMenuItem = menuItem.getItemId();
-                            //     MainApp.showOnlyFilesOnDevice(true);
-                            //     refreshDirectory();
-                            //     break;
+                             case R.id.nav_on_device:
+                                 menuItem.setChecked(true);
+                                 mCheckedMenuItem = menuItem.getItemId();
+                                 showFiles(true);
+                                 break;
                             case R.id.nav_uploads:
                                 Intent uploadListIntent = new Intent(getApplicationContext(),
                                         UploadListActivity.class);
@@ -258,6 +248,13 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
             mNavigationView.getMenu().setGroupVisible(R.id.drawer_menu_accounts, false);
         }
     }
+
+    /**
+     * show the file list to the user.
+     *
+     * @param onDeviceOnly flag to decide if all files or only the ones on the device should be shown
+     */
+    public abstract void showFiles(boolean onDeviceOnly);
 
     /**
      * sets the new/current account and restarts. In case the given account equals the actual/current account the
@@ -412,11 +409,6 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
         // adding sets menu group back to visible, so safety check and setting invisible
         showMenu();
     }
-
-    /**
-     * Method that gets called on drawer menu click for 'All Files'.
-     */
-    public abstract void allFilesOption();
 
     /**
      * Updates title bar and home buttons (state and icon).
