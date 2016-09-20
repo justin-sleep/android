@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="about_android">%1$s Android приложение</string>
     <string name="about_version">версия %1$s</string>
     <string name="actionbar_sync">Обновяви профила</string>
@@ -14,10 +13,6 @@
     <string name="actionbar_send_file">Изпращане</string>
     <string name="actionbar_sort">Сортиране</string>
     <string name="actionbar_sort_title">Сортирай по</string>
-    <string-array name="actionbar_sortby">
-    	<item>А-Я</item>
-    	<item>Нови - Стари</item>
-    </string-array>
     <string name="drawer_item_all_files">Всички файлове</string>
     <string name="drawer_item_settings">Настройки</string>
     <string name="drawer_item_uploads_list">Качено</string>
@@ -343,7 +338,7 @@
 	<string name="saml_authentication_required_text">Нужна е идентификация</string>
 	<string name="saml_authentication_wrong_pass">Грешна парола</string>
 	<string name="actionbar_move">Премести</string>
-	<string name="file_list_empty_moving">Тук няма нищо. Можеш да добавиш папка!</string>
+    <string name="file_list_empty_moving">Тук няма нищо. Можеш да добавиш папка!</string>
 	<string name="folder_picker_choose_button_text">Избери</string>
 
     <string name="move_file_not_found">Неуспешно преместване. Моля, провери дали файла съществува.</string>

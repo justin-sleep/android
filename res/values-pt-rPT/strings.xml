@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="about_android">%1$s Aplicação Android</string>
     <string name="about_version">versão %1$s</string>
     <string name="actionbar_sync">Atualizar conta</string>
@@ -14,10 +13,6 @@
     <string name="actionbar_send_file">Enviar</string>
     <string name="actionbar_sort">Ordenar</string>
     <string name="actionbar_sort_title">Ordenar por</string>
-    <string-array name="actionbar_sortby">
-    	<item>A-Z</item>
-    	<item>Mais Recente - Mais Antigo</item>
-    </string-array>
     <string name="drawer_item_all_files">Todos os ficheiros</string>
     <string name="drawer_item_settings">Definições</string>
     <string name="drawer_item_uploads_list">Carregamentos</string>
@@ -344,7 +339,7 @@
 	<string name="saml_authentication_required_text">Autenticação necessária</string>
 	<string name="saml_authentication_wrong_pass">Palavra-passe errada</string>
 	<string name="actionbar_move">Mover</string>
-	<string name="file_list_empty_moving">Não está aqui nada. Pode adicionar uma pasta!</string>
+    <string name="file_list_empty_moving">Não está aqui nada. Pode adicionar uma pasta!</string>
 	<string name="folder_picker_choose_button_text">Escolher</string>
 
     <string name="move_file_not_found">Não é possível mover. Por favor, verifique se o ficheiro existe</string>
@@ -385,13 +380,12 @@
     <string name="file_list__footer__files">%1$d ficheiros</string>
     <string name="file_list__footer__files_and_folder">%1$d ficheiros, 1 pasta</string>
     <string name="file_list__footer__files_and_folders">%1$d ficheiros, %2$d pastas</string>
-    <string name="prefs_instant_behaviour_dialogTitle">O ficheiro original será...</string>
-    <string name="prefs_instant_behaviour_title">O ficheiro original será...</string>
+    <string name="prefs_instant_behaviour_dialogTitle">O ficheiro original será&#8230;</string>
+    <string name="prefs_instant_behaviour_title">O ficheiro original será&#8230;</string>
     <string name="upload_copy_files">Copiar ficheiro</string>
     <string name="upload_move_files">Mover ficheiro</string>
     <string name="pref_behaviour_entries_keep_file">mantido na pasta original</string>
     <string name="pref_behaviour_entries_move">movido para pasta da aplicação</string>
-
     <string name="share_dialog_title">Partilha</string>
     <string name="share_file">Partilhar %1$s</string>
     <string name="share_with_user_section_title">Partilhar com utilizadores e grupos</string>

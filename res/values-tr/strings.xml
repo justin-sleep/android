@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="about_android">%1$s Android uygulaması</string>
     <string name="about_version">sürüm %1$s</string>
     <string name="actionbar_sync">Hesabı yenile</string>
@@ -14,11 +13,6 @@
     <string name="actionbar_send_file">Gönder</string>
     <string name="actionbar_sort">Sırala</string>
     <string name="actionbar_sort_title">Şuna göre sırala</string>
-    <string-array name="actionbar_sortby">
-    	<item>A-Z</item>
-    	<item>Yeniden - Eskiye</item>
-    	<item>En Büyük - En Küçük</item>
-    </string-array>
     <string name="drawer_item_all_files">Tüm dosyalar</string>
     <string name="drawer_item_on_device">Aygıtta</string>
     <string name="drawer_item_settings">Ayarlar</string>
@@ -358,7 +352,7 @@
 	<string name="saml_authentication_required_text">Kimlik doğrulama gerekli</string>
 	<string name="saml_authentication_wrong_pass">Hatalı parola</string>
 	<string name="actionbar_move">Taşı</string>
-	<string name="file_list_empty_moving">Burada bir şey yok. Bir klasör ekleyebilirsiniz!</string>
+    <string name="file_list_empty_moving">Burada bir şey yok. Bir klasör ekleyebilirsiniz!</string>
 	<string name="folder_picker_choose_button_text">Seç</string>
 
     <string name="move_file_not_found">Taşıma başarısız. Lütfen dosyanın mevcut olup olmadığını denetleyin</string>
@@ -400,15 +394,14 @@
     <string name="file_list__footer__files">%1$d dosya</string>
     <string name="file_list__footer__files_and_folder">%1$d dosya, 1 klasör</string>
     <string name="file_list__footer__files_and_folders">%1$d dosya, %2$d klasör</string>
-    <string name="prefs_instant_behaviour_dialogTitle">Özgün dosya...</string>
-    <string name="prefs_instant_behaviour_title">Özgün dosya...</string>
+    <string name="prefs_instant_behaviour_dialogTitle">Özgün dosya&#8230;</string>
+    <string name="prefs_instant_behaviour_title">Özgün dosya&#8230;</string>
     <string name="upload_copy_files">Dosyayı kopyala</string>
     <string name="upload_move_files">Dosyayı taşı</string>
     <string name="select_all">Tümünü seç</string>
 
     <string name="pref_behaviour_entries_keep_file">özgün klasöründe tutuldu</string>
     <string name="pref_behaviour_entries_move">app klasörüne taşındı</string>
-
     <string name="share_dialog_title">Paylaşım</string>
     <string name="share_file">%1$s paylaş</string>
     <string name="share_with_user_section_title">Kullanıcı ve Gruplarla paylaş</string>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="about_android">%1$s Android app</string>
     <string name="about_version">versie %1$s</string>
     <string name="actionbar_sync">Account verversen</string>
@@ -14,16 +13,15 @@
     <string name="actionbar_send_file">Versturen</string>
     <string name="actionbar_sort">Sorteren</string>
     <string name="actionbar_sort_title">Sorteer op</string>
-    <string-array name="actionbar_sortby">
-    	<item>A-Z</item>
-    	<item>Nieuwste - Oudste</item>
-    	<item>Grootste - Kleinste</item>
-    </string-array>
+    <string name="menu_item_sort_by_name">A - Z</string>
+    <string name="menu_item_sort_by_date">Nieuwste - Oudste</string>
+    <string name="menu_item_sort_by_size">Grootste - Kleinste</string>
     <string name="drawer_item_all_files">Alle bestanden</string>
     <string name="drawer_item_on_device">Op het apparaat</string>
     <string name="drawer_item_settings">Instellingen</string>
     <string name="drawer_item_uploads_list">Uploads</string>
-    <string name="drawer_close">Sluiten</string>
+    <string name="drawer_quota">%1$s van %2$s gebruikt</string>
+	<string name="drawer_close">Sluiten</string>
     <string name="drawer_open">Open</string>
     <string name="prefs_category_general">Algemeen</string>
     <string name="prefs_category_more">Meer</string>
@@ -39,6 +37,11 @@
     <string name="prefs_log_title_history">Logging geschiedenis</string>
     <string name="prefs_log_summary_history">Dit toont de bijgehouden logs</string>
     <string name="prefs_log_delete_history_button">Verwijder geschiedenis</string>
+    <string name="prefs_calendar_contacts">Instellen agenda &amp; contactspersonen sync</string>
+    <string name="prefs_calendar_contacts_summary">Instellen DAVdroid (v1.3.0+) voor huidige gebruikte account</string>
+    <string name="prefs_calendar_contacts_address_resolve_error">Serveradres voor dit account kon niet worden gevonden voor DAVdroid</string>
+    <string name="prefs_calendar_contacts_no_store_error">Geen Google Play store of F-Droid app geïnstalleerd</string>
+    <string name="prefs_calendar_contacts_sync_setup_successful">Agenda &amp; contactpersonen sync succesvol ingesteld</string>
     <string name="prefs_help">Help</string>
     <string name="prefs_recommend">Aanbevelen bij een vriend</string>
     <string name="prefs_feedback">Feedback</string>
@@ -71,6 +74,10 @@ Download hier: %2$s</string>
     <string name="uploader_error_message_read_permission_not_granted">%1$s is niet toegestaan om een ontvangen bestand te lezen</string>
     <string name="uploader_error_message_source_file_not_found">Het te uploaden bestand is hier niet. Controleer of het bestand wel bestaat.</string>
     <string name="uploader_error_message_source_file_not_copied">Er trad een fout op bij het kopiëren van het bestand naar een tijdelijke map. Probeer het opnieuw te versturen.</string>
+    <string name="uploader_upload_files_behaviour">Upload optie:</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Verplaats bestand naar Nextcloud map</string>
+    <string name="uploader_upload_files_behaviour_only_upload">Bewaar het bestand in de bronmap</string>
+    <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Verwijder bestand uit bronmap</string>
     <string name="file_list_seconds_ago">seconden geleden</string>
     <string name="file_list_empty">Er bevindt zich hier niets. Upload een bestand!</string>
     <string name="file_list_loading">Laden...</string>
@@ -104,6 +111,7 @@ Download hier: %2$s</string>
     <string name="common_loading">Laden...</string>
     <string name="common_unknown">onbekend</string>
     <string name="common_error_unknown">Onbekende fout</string>
+    <string name="common_pending">In behandeling</string>
     <string name="about_title">Over</string>
     <string name="change_password">Wijzig wachtwoord</string>
     <string name="delete_account">Verwijder account</string>
@@ -296,6 +304,8 @@ Hieronder staan de lokale bestanden en de externe bestanden in %5$s waar ze naar
 
     <string name="instant_upload_on_wifi">Upload afbeeldingen alleen via WiFi</string>
     <string name="instant_video_upload_on_wifi">Upload videos alleen via WiFi</string>
+    <string name="instant_video_upload_on_charging">Upload alleen tijdens opladen</string>
+    <string name="instant_upload_on_charging">Upload alleen tijdens opladen</string>
     <string name="instant_upload_path">/InstantUpload</string>
     <string name="conflict_title">Bestandsconflict</string>
     <string name="conflict_message">Welke bestanden wil je bewaren? Als je beide versies selecteert zal het lokale bestand een volgnummer aan de naam toegevoegd krijgen.</string>
@@ -362,6 +372,7 @@ Hieronder staan de lokale bestanden en de externe bestanden in %5$s waar ze naar
 	<string name="saml_authentication_required_text">Authenticatie vereist</string>
 	<string name="saml_authentication_wrong_pass">Onjuist wachtwoord</string>
 	<string name="actionbar_move">Verplaatsen</string>
+    <string name="actionbar_copy">Kopie</string>
 	<string name="file_list_empty_moving">Niets hier. Je kunt een map toevoegen!</string>
 	<string name="folder_picker_choose_button_text">Kies</string>
 
@@ -404,14 +415,15 @@ Hieronder staan de lokale bestanden en de externe bestanden in %5$s waar ze naar
     <string name="file_list__footer__files">%1$d bestanden</string>
     <string name="file_list__footer__files_and_folder">%1$d bestanden, 1 map</string>
     <string name="file_list__footer__files_and_folders">%1$d bestanden, %2$d mappen</string>
-    <string name="prefs_instant_behaviour_dialogTitle">Originele bestand zal zijn...</string>
-    <string name="prefs_instant_behaviour_title">Originele bestand zal zijn...</string>
+    <string name="prefs_instant_behaviour_dialogTitle">Origineel bestand zal zijn&#8230;</string>
+    <string name="prefs_instant_behaviour_title">Origineel bestand zal zijn&#8230;</string>
     <string name="upload_copy_files">Kopiëren bestand</string>
     <string name="upload_move_files">Verplaatsen bestand</string>
     <string name="select_all">Selecteer alles</string>
 
     <string name="pref_behaviour_entries_keep_file">bewaard in originele map</string>
     <string name="pref_behaviour_entries_move">verplaatst naar app map</string>
+    <string name="pref_behaviour_entries_delete_file">verwijderd</string>
 
     <string name="share_dialog_title">Delen</string>
     <string name="share_file">Deel %1$s</string>
@@ -423,6 +435,7 @@ Hieronder staan de lokale bestanden en de externe bestanden in %5$s waar ze naar
     <string name="share_via_link_password_label">Wachtwoord beveiligd</string>
     <string name="share_via_link_password_title">Beveiligd</string>
     <string name="share_via_link_edit_permission_label">Toestaan bewerken</string>
+    <string name="share_via_link_hide_file_listing_permission_label">Verberg bestandsoverzicht</string>
     <string name="share_get_public_link_button">Ophalen link</string>
     <string name="share_with_title">Deel met ...</string>
     <string name="share_with_edit_title">Deel met %1$s</string>
@@ -461,7 +474,28 @@ Neem contact op met je beheerder</string>
     <string name="local_file_not_found_toast">Het bestand is niet te vinden binnen het lokale bestandssysteem.</string>
     <string name="confirmation_remove_files_alert">Wil je de geselecteerde objecten echt verwijderen?</string>
     <string name="confirmation_remove_folders_alert">Wil je de geselecteerde objecten en hun inhoud echt verwijderen?</string>
+    <string name="uploads_view_upload_status_waiting_for_charging">Wachten to apparaat word opgeladen</string>
     <string name="actionbar_search">Zoeken</string>
+    <string name="files_drop_not_supported">Dit is een Nextcloud optie, graag bijwerken.</string>
+    <string name="learn_more">Meer weten</string>
+    <string name="drawer_participate">Meedoen</string>
+    <string name="participate_testing_headline">Help ons testen</string>
+    <string name="participate_testing_bug_text">Foutje gevonden? Of iets raars?</string>
+    <string name="participate_testing_report_text">Meld het op Github</string>
+    <string name="participate_testing_version_text">Geïnteresseerd om ons te helpen de volgende versie te testen?</string>
+    <string name="participate_beta_headline">Test de Beta versie</string>
+    <string name="participate_beta_text">Dit omvat alle komende opties en is zeer \'bleeding edge\'. Bugs/fouten
+kunnen voorkomen en in dat geval vragen we je die aan ons te melden. &lt;br/>&lt;a href=\"%2$s\">Download de APK&lt;/a>
+of</string>
+    <string name="participate_release_candidate_headline">Release candidate</string>
+    <string name="participate_release_candidate_text">De Release Candidate (RC) is een kopie van de komende release en zou stabiel moeten zijn. Testen van jouw installatie kan ons helpen om dit te bevestigen. Meld je aan om te testen op de Play store en bekijk handmatig de \"versions\" sectie op F-Droid. </string>
+    <string name="participate_contribute_headline">Actief meedoen</string>
+    <string name="participate_contribute_irc_text">Doe mee met de chat op IRC: &lt;a href=\"%1$s\">#nextcloud-mobile&lt;/a></string>
+    <string name="participate_contribute_forum_text">Help anderen op het &lt;a href=\"%1$s>forum&lt;/a></string>
+    <string name="participate_contribute_translate_text">&lt;a href=\"%1$s>Vertaal&lt;/a> de app</string>
+    <string name="participate_contribute_github_text">Doe mee als ontwikkelaar, zie &lt;a href=\"https://github.com/nextcloud/android/blob/master/CONTRIBUTING.md\">CONTRIBUTING.md&lt;/a> voor details</string>
+    <string name="move_to">Verplaats naar&#8230;</string>
+    <string name="copy_to">Kopieer naar&#8230;</string>
     <plurals name="items_selected_count">
         <item quantity="one">%d geselecteerd</item>
         <item quantity="other">%d geselecteerd</item>

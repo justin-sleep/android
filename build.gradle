@@ -10,7 +10,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.3'
+        classpath 'com.android.tools.build:gradle:2.2.0'
     }
 }
 
@@ -33,7 +33,7 @@ dependencies {
     /// dependencies for app building
     compile name: 'touch-image-view'
 
-    compile 'com.github.nextcloud:android-library:1.0.6'
+    compile 'com.github.nextcloud:android-library:1.0.7'
     compile "com.android.support:support-v4:${supportLibraryVersion}"
     compile "com.android.support:design:${supportLibraryVersion}"
     compile 'com.jakewharton:disklrucache:2.0.2'

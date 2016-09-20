@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="about_android">%1$s Aplicación de Android</string>
     <string name="about_version">versión %1$s</string>
     <string name="actionbar_sync">Actualizar cuenta</string>
@@ -14,16 +13,15 @@
     <string name="actionbar_send_file">Enviar</string>
     <string name="actionbar_sort">Ordenar</string>
     <string name="actionbar_sort_title">Ordenar por</string>
-    <string-array name="actionbar_sortby">
-    	<item>A-Z</item>
-    	<item>Más nuevo - Más viejo</item>
-    	<item>El mayor - El menor</item>
-    </string-array>
+    <string name="menu_item_sort_by_name">A - Z</string>
+    <string name="menu_item_sort_by_date">Más nuevo - Más viejo</string>
+    <string name="menu_item_sort_by_size">El mayor - El menor</string>
     <string name="drawer_item_all_files">Todos los archivos</string>
     <string name="drawer_item_on_device">En el dispositivo</string>
     <string name="drawer_item_settings">Ajustes</string>
     <string name="drawer_item_uploads_list">Subidas</string>
-    <string name="drawer_close">Cerrar</string>
+    <string name="drawer_quota">%1$s de %2$s utilizado</string>
+	<string name="drawer_close">Cerrar</string>
     <string name="drawer_open">Abrir</string>
     <string name="prefs_category_general">General</string>
     <string name="prefs_category_more">Más</string>
@@ -103,6 +101,7 @@
     <string name="common_loading">Cargando...</string>
     <string name="common_unknown">desconocido</string>
     <string name="common_error_unknown">Error desconocido</string>
+    <string name="common_pending">Pendiente</string>
     <string name="about_title">Acerca de</string>
     <string name="change_password">Cambiar contraseña</string>
     <string name="delete_account">Eliminar cuenta</string>
@@ -359,7 +358,7 @@
 	<string name="saml_authentication_required_text">Se necesita autenticación</string>
 	<string name="saml_authentication_wrong_pass">Contraseña incorrecta</string>
 	<string name="actionbar_move">Mover</string>
-	<string name="file_list_empty_moving">Aquí no hay nada. ¡Puede agregar una carpeta!</string>
+    <string name="file_list_empty_moving">Aquí no hay nada. ¡Puede agregar una carpeta!</string>
 	<string name="folder_picker_choose_button_text">Elegir</string>
 
     <string name="move_file_not_found">No se puede mover. Revise si el archivo existe</string>
@@ -401,15 +400,14 @@
     <string name="file_list__footer__files">%1$d archivos</string>
     <string name="file_list__footer__files_and_folder">%1$d archivos, 1 carpeta</string>
     <string name="file_list__footer__files_and_folders">%1$d archivos, %2$d carpetas</string>
-    <string name="prefs_instant_behaviour_dialogTitle">El archivo original será...</string>
-    <string name="prefs_instant_behaviour_title">El archivo original será...</string>
+    <string name="prefs_instant_behaviour_dialogTitle">El archivo original será&#8230;</string>
+    <string name="prefs_instant_behaviour_title">El archivo original será&#8230;</string>
     <string name="upload_copy_files">Copiar archivo</string>
     <string name="upload_move_files">Mover archivo</string>
     <string name="select_all">Seleccionar todo</string>
 
     <string name="pref_behaviour_entries_keep_file">dejado en la carpeta original</string>
     <string name="pref_behaviour_entries_move">movido a la carpeta apps</string>
-
     <string name="share_dialog_title">Compartiendo</string>
     <string name="share_file">Compartir %1$s</string>
     <string name="share_with_user_section_title">Compartir con usuarios y grupos</string>

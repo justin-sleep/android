@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="about_android">%1$s Aplikasi Android</string>
     <string name="about_version">versi %1$s</string>
     <string name="actionbar_sync">Segarkan akun</string>
@@ -14,11 +13,6 @@
     <string name="actionbar_send_file">Kirim</string>
     <string name="actionbar_sort">Urutkan</string>
     <string name="actionbar_sort_title">Urutan</string>
-    <string-array name="actionbar_sortby">
-    	<item>A-Z</item>
-    	<item>Terbaru - Terlawas</item>
-    	<item>Terbesar - Terkecil</item>
-    </string-array>
     <string name="drawer_item_all_files">Semua berkas</string>
     <string name="drawer_item_on_device">Dalam perangkat</string>
     <string name="drawer_item_settings">Pengaturan</string>
@@ -358,7 +352,7 @@
 	<string name="saml_authentication_required_text">Diperlukan otentikasi</string>
 	<string name="saml_authentication_wrong_pass">Sandi salah</string>
 	<string name="actionbar_move">Pindah</string>
-	<string name="file_list_empty_moving">Tdak ada apapun disini. Anda dapat menambahkan sebuah folder!</string>
+    <string name="file_list_empty_moving">Tdak ada apapun disini. Anda dapat menambahkan sebuah folder!</string>
 	<string name="folder_picker_choose_button_text">Pilih</string>
 
     <string name="move_file_not_found">Tidak dapat memindahkan. Silakan periksa apakah berkas ada</string>
@@ -400,15 +394,14 @@
     <string name="file_list__footer__files">%1$d berkas</string>
     <string name="file_list__footer__files_and_folder">%1$d berkas, 1 folder</string>
     <string name="file_list__footer__files_and_folders">%1$d berkas, %2$d folder</string>
-    <string name="prefs_instant_behaviour_dialogTitle">Berkas asli akan menjadi...</string>
-    <string name="prefs_instant_behaviour_title">Berkas asli akan menjadi...</string>
+    <string name="prefs_instant_behaviour_dialogTitle">Berkas asli akan menjadi&#8230;</string>
+    <string name="prefs_instant_behaviour_title">Berkas asli akan menjadi&#8230;</string>
     <string name="upload_copy_files">Salin berkas</string>
     <string name="upload_move_files">Pindahkan berkas</string>
     <string name="select_all">Pilih semua</string>
 
     <string name="pref_behaviour_entries_keep_file">Tersimpan di folder asli</string>
     <string name="pref_behaviour_entries_move">Dipindahkan ke folder aplikasi</string>
-
     <string name="share_dialog_title">Berbagi</string>
     <string name="share_file">Bagikan %1$s</string>
     <string name="share_with_user_section_title">Bagikan dengan pengguna atau grup</string>

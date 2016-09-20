@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="about_android">%1$s Android App</string>
     <string name="about_version">Version %1$s</string>
     <string name="actionbar_sync">Konto aktualisieren</string>
@@ -14,11 +13,9 @@
     <string name="actionbar_send_file">Senden</string>
     <string name="actionbar_sort">Sortieren</string>
     <string name="actionbar_sort_title">Sortieren nach</string>
-    <string-array name="actionbar_sortby">
-    	<item>A-Z</item>
-    	<item>Neueste - Älteste</item>
-    	<item>Größte - Kleinste</item>
-    </string-array>
+    <string name="menu_item_sort_by_name">A - Z</string>
+    <string name="menu_item_sort_by_date">Neueste - Älteste</string>
+    <string name="menu_item_sort_by_size">Größte - Kleinste</string>
     <string name="drawer_item_all_files">Alle Dateien</string>
     <string name="drawer_item_on_device">Auf dem Gerät</string>
     <string name="drawer_item_settings">Einstellungen</string>
@@ -40,6 +37,11 @@
     <string name="prefs_log_title_history">Protokollierungs-Historie</string>
     <string name="prefs_log_summary_history">Dies zeigt die gespeicherten Protokollierungen</string>
     <string name="prefs_log_delete_history_button">Verlauf löschen</string>
+    <string name="prefs_calendar_contacts">Kalender &amp; Kontakte Synchronisierung konfigurieren</string>
+    <string name="prefs_calendar_contacts_summary">DAVdroid (v1.3.0+) für aktuelles Konto konfigurieren</string>
+    <string name="prefs_calendar_contacts_address_resolve_error">Serveradresse des Kontos für die DAVdroid-Nutzung konnte nicht ermittelt werden</string>
+    <string name="prefs_calendar_contacts_no_store_error">Weder Google Play Store noch F-Droid App installiert</string>
+    <string name="prefs_calendar_contacts_sync_setup_successful">Kalender &amp; Kontakte Sychronisierung erfolgreich konfiguriert</string>
     <string name="prefs_help">Hilfe</string>
     <string name="prefs_recommend">Empfehle dies einem Freund</string>
     <string name="prefs_feedback">Rückmeldungen</string>
@@ -48,7 +50,7 @@
     <string name="prefs_remember_last_upload_location_summary">Geteilten Upload-Speicherort merken</string>
 
 	<string name="recommend_subject">Probiere %1$s auf Deinem Smartphone!</string>
-	<string name="recommend_text">Ich möchte Dich zum Benutzen von %1$s auf Deinem Smartphone einladen!\nLade es hier herunter: %2$s</string>
+	<string name="recommend_text">Ich empfehle Dir die Nutzung von %1$s auf Deinem Smartphone!\\nLade es hier herunter: %2$s</string>
 
     <string name="auth_check_server">Server überprüfen</string>
     <string name="auth_host_url">Server-Adresse https://…</string>
@@ -69,8 +71,12 @@
     <string name="uploader_error_message_no_file_to_upload">Empfangene Daten enthalten  keine gültige Datei.</string>
     <string name="uploader_error_title_file_cannot_be_uploaded">Datei kann nicht hochgeladen werden</string>
     <string name="uploader_error_message_read_permission_not_granted">%1$s darf eine empfangene Datei nicht lesen</string>
-    <string name="uploader_error_message_source_file_not_found">Hochzuladende Datei wurde an seinem Ort nicht gefunden. Prüfe, dass die Datei existiert.</string>
-    <string name="uploader_error_message_source_file_not_copied">Es ist ein Fehler beim Kopieren dieser Datei in einen temporären Ordner aufgetreten. Bitte nochmals versuchen, die Datei zu senden.</string>
+    <string name="uploader_error_message_source_file_not_found">Hochzuladende Datei wurde an seinem Ort nicht gefunden. Prüfe, ob die Datei existiert.</string>
+    <string name="uploader_error_message_source_file_not_copied">Es ist ein Fehler beim Kopieren dieser Datei in einen temporären Ordner aufgetreten. Bitte erneut versuchen die Datei zu senden.</string>
+    <string name="uploader_upload_files_behaviour">Upload Option:</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Datei in Nextcloud Ordner verschieben</string>
+    <string name="uploader_upload_files_behaviour_only_upload">Hochladen und im Quellordner behalten</string>
+    <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Hochladen und Datei im Quellordner löschen</string>
     <string name="file_list_seconds_ago">Gerade eben</string>
     <string name="file_list_empty">Alles leer. Lade etwas hoch!</string>
     <string name="file_list_loading">Lade…</string>
@@ -104,11 +110,12 @@
     <string name="common_loading">Lade…</string>
     <string name="common_unknown">unbekannt</string>
     <string name="common_error_unknown">Unbekannter Fehler</string>
+    <string name="common_pending">Ausstehend</string>
     <string name="about_title">Über</string>
     <string name="change_password">Passwort ändern</string>
     <string name="delete_account">Benutzerkonto löschen</string>
     <string name="delete_account_warning">Das Konto %s löschen?\n\nDas Löschen kann nicht rückgängig gemacht werden.</string>
-    <string name="create_account">Account erstellen</string>
+    <string name="create_account">Benutzerkonto erstellen</string>
     <string name="upload_chooser_title">Dateien hochladen von…</string>
     <string name="uploader_info_dirname">Ordnername</string>
     <string name="uploader_upload_in_progress_ticker">Hochladen…</string>
@@ -127,7 +134,7 @@
     <string name="uploads_view_upload_status_paused">pausiert</string>
     <string name="uploads_view_upload_status_failed_connection_error">Verbindungsfehler</string>
     <string name="uploads_view_upload_status_failed_retry">Der Upload wird in Kürze erneut versucht</string>
-    <string name="uploads_view_upload_status_failed_credentials_error">Zugangsdaten ffalsch</string>
+    <string name="uploads_view_upload_status_failed_credentials_error">Zugangsdaten falsch</string>
     <string name="uploads_view_upload_status_failed_folder_error">Ziel-Ordner fehlt</string>
     <string name="uploads_view_upload_status_failed_file_error">Dateifehler</string>
     <string name="uploads_view_upload_status_failed_localfile_error">Lokale Datei nicht gefunden</string>
@@ -294,6 +301,8 @@
 
     <string name="instant_upload_on_wifi">Bilder nur über Wifi hochladen</string>
     <string name="instant_video_upload_on_wifi">Videos nur über Wifi hochladen</string>
+    <string name="instant_video_upload_on_charging">Hochladen nur während des Ladens</string>
+    <string name="instant_upload_on_charging">Hochladen nur während des Ladens</string>
     <string name="instant_upload_path">/SofortUpload</string>
     <string name="conflict_title">Dateikonfilikt</string>
     <string name="conflict_message">Welche Datei soll behalten werden? Wenn du beide Versionen wählst, wird der lokalen Datei eine Zahl am Ende des Dateinamens angefügt.</string>
@@ -360,6 +369,7 @@
 	<string name="saml_authentication_required_text">Legitimierung benötigt</string>
 	<string name="saml_authentication_wrong_pass">Falsches Passwort</string>
 	<string name="actionbar_move">Verschieben</string>
+    <string name="actionbar_copy">Kopieren</string>
 	<string name="file_list_empty_moving">Noch nichts vorhanden. Sie können einen Ordner hinzufügen!</string>
 	<string name="folder_picker_choose_button_text">Auswählen</string>
 
@@ -402,14 +412,15 @@
     <string name="file_list__footer__files">%1$d Dateien</string>
     <string name="file_list__footer__files_and_folder">%1$d Dateien, 1 Ordner</string>
     <string name="file_list__footer__files_and_folders">%1$d Dateien, %2$d Ordner</string>
-    <string name="prefs_instant_behaviour_dialogTitle">Originaldatei wird...</string>
-    <string name="prefs_instant_behaviour_title">Originaldatei wird...</string>
+    <string name="prefs_instant_behaviour_dialogTitle">Originaldatei wird&#8230;</string>
+    <string name="prefs_instant_behaviour_title">Originaldatei wird&#8230;</string>
     <string name="upload_copy_files">kopiere Datei</string>
     <string name="upload_move_files">verschiebe Datei</string>
     <string name="select_all">Alle auswählen</string>
 
     <string name="pref_behaviour_entries_keep_file">im Originalordner behalten</string>
     <string name="pref_behaviour_entries_move">in den App-Ordner verschoben</string>
+    <string name="pref_behaviour_entries_delete_file">gelöscht</string>
 
     <string name="share_dialog_title">Teilen</string>
     <string name="share_file">Teile %1$s</string>
@@ -421,6 +432,7 @@
     <string name="share_via_link_password_label">Passwortschutz</string>
     <string name="share_via_link_password_title">Gesichert</string>
     <string name="share_via_link_edit_permission_label">Bearbeitung erlauben</string>
+    <string name="share_via_link_hide_file_listing_permission_label">Dateiliste verbergen</string>
     <string name="share_get_public_link_button">Link erhalten</string>
     <string name="share_with_title">Teile mit ...</string>
     <string name="share_with_edit_title">Teile mit %1$s</string>
@@ -459,7 +471,26 @@
     <string name="local_file_not_found_toast">Die Datei wurde im lokalen Dateisystem nicht gefunden</string>
     <string name="confirmation_remove_files_alert">Willst Du die ausgewählten Einträge wirklich löschen?</string>
     <string name="confirmation_remove_folders_alert">Willst Du die ausgewählten Einträge und deren Inhalte wirklich löschen?</string>
+    <string name="uploads_view_upload_status_waiting_for_charging">Warte auf das Aufladen des Gerätes</string>
     <string name="actionbar_search">Suche</string>
+    <string name="files_drop_not_supported">Dies ist eine Nextcloud Funktion, bitte updaten.</string>
+    <string name="learn_more">Mehr</string>
+    <string name="drawer_participate">Mitmachen</string>
+    <string name="participate_testing_headline">Hilf uns Testen</string>
+    <string name="participate_testing_bug_text">Fehler gefunden? Komisches Verhalten?</string>
+    <string name="participate_testing_report_text">Fehler melden auf Github</string>
+    <string name="participate_testing_version_text">Interessiert uns beim Test der nächsten Version zu unterstützen?</string>
+    <string name="participate_beta_headline">Teste die Beta Version</string>
+    <string name="participate_beta_text">Dies beinhaltet alle kommenden Funktionen und ist nicht vollumfänglich qualitätsgesichert. Es können Fehler auftreten und wenn das passiert meldet uns diese bitte.&lt;br/>&lt;a href=\"%2$s\">APK herunterladen&lt;/a> oder</string>
+    <string name="participate_release_candidate_headline">Vorabversion</string>
+    <string name="participate_release_candidate_text">Die Vorabversion auch Release Candidate (RC) genannt ist ein stabiler Stand der kommenden, finalen Version. Ein Test auf der eigenen Umgebung hilft uns diese Stabilität sicherzustellen. Melde dich als Tester im Play Store an oder suche und installiere die passende Version von F-Droid unter \"Versionen\".</string>
+    <string name="participate_contribute_headline">Aktiv etwas beitragen</string>
+    <string name="participate_contribute_irc_text">An Chats teilnehmen auf IRC: &lt;a href="%1$s">#nextcloud-mobile&lt;/a></string>
+    <string name="participate_contribute_forum_text">Hilf anderen im &lt;a href="%1$s>Forum&lt;/a></string>
+    <string name="participate_contribute_translate_text">&lt;a href="%1$s>Übersetze&lt;/a> die App</string>
+    <string name="participate_contribute_github_text">Als Entwickler einen Beitrag leisten, Details unter &lt;a href="https://github.com/nextcloud/android/blob/master/CONTRIBUTING.md">CONTRIBUTING.md&lt;/a></string>
+    <string name="move_to">Verschieben nach&#8230;</string>
+    <string name="copy_to">Kopieren nach&#8230;</string>
     <plurals name="items_selected_count">
         <item quantity="one">%d ausgewählt</item>
         <item quantity="other">%d ausgewählt</item>

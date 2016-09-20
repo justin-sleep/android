@@ -149,7 +149,7 @@ public class FileUploader extends Service
     public static final int LOCAL_BEHAVIOUR_COPY = 0;
     public static final int LOCAL_BEHAVIOUR_MOVE = 1;
     public static final int LOCAL_BEHAVIOUR_FORGET = 2;
-
+    public static final int LOCAL_BEHAVIOUR_DELETE = 3;
 
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
@@ -1030,6 +1030,7 @@ public class FileUploader extends Service
 
         // Show the result: success or fail notification
         if (!uploadResult.isCancelled() &&
+            !ResultCode.LOCAL_FILE_NOT_FOUND.equals(uploadResult.getCode()) &&
             !uploadResult.getCode().equals(ResultCode.DELAYED_FOR_WIFI) &&
             !uploadResult.getCode().equals(ResultCode.DELAYED_FOR_CHARGING)) {
 

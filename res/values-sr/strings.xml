@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="about_android">%1$s Андроид апликација</string>
     <string name="about_version">верзија %1$s</string>
     <string name="actionbar_sync">Освежи налог</string>
@@ -14,10 +13,6 @@
     <string name="actionbar_send_file">Пошаљи</string>
     <string name="actionbar_sort">Разврставање</string>
     <string name="actionbar_sort_title">Разврставање</string>
-    <string-array name="actionbar_sortby">
-    	<item>A-Z</item>
-    	<item>новији - старији</item>
-    </string-array>
     <string name="drawer_item_all_files">Сви фајлови</string>
     <string name="drawer_item_settings">Поставке</string>
     <string name="drawer_item_uploads_list">Отпремања</string>
@@ -320,7 +315,7 @@
 	<string name="saml_authentication_required_text">Неопходна аутентификација</string>
 	<string name="saml_authentication_wrong_pass">Погрешна лозинка</string>
 	<string name="actionbar_move">Премести</string>
-	<string name="file_list_empty_moving">Овде нема ничега. Можете додати фасциклу!</string>
+    <string name="file_list_empty_moving">Овде нема ничега. Можете додати фасциклу!</string>
 	<string name="folder_picker_choose_button_text">Одабери</string>
 
     <string name="move_file_not_found">Не могу да преместим. Проверите да ли фајл постоји</string>
@@ -360,13 +355,12 @@
     <string name="file_list__footer__files">%1$d фајлова</string>
     <string name="file_list__footer__files_and_folder">%1$d фајлова, 1 фасцикла</string>
     <string name="file_list__footer__files_and_folders">%1$d фајлова, %2$d фасцикли</string>
-    <string name="prefs_instant_behaviour_dialogTitle">Оригинални фајл ће бити...</string>
-    <string name="prefs_instant_behaviour_title">Оригинални фајл ће бити...</string>
+    <string name="prefs_instant_behaviour_dialogTitle">Оригинални фајл ће бити&#8230;</string>
+    <string name="prefs_instant_behaviour_title">Оригинални фајл ће бити&#8230;</string>
     <string name="upload_copy_files">Копирај фајл</string>
     <string name="upload_move_files">Премести фајл</string>
     <string name="pref_behaviour_entries_keep_file">остављен у изворној фасцикли</string>
     <string name="pref_behaviour_entries_move">премештен у фасциклу апликације</string>
-
     <string name="share_dialog_title">Дељење</string>
     <string name="share_with_user_section_title">Дељење са корисницима и групама</string>
     <string name="share_add_user_or_group">Додај корисника или групу</string>
