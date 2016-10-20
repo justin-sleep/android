@@ -541,7 +541,8 @@ public class ReceiveExternalFilesActivity extends FileActivity
     }
 
     private boolean somethingToUpload() {
-        return (mStreamsToUpload != null && mStreamsToUpload.get(0) != null || uploadTextSnippet());
+        return (mStreamsToUpload != null && mStreamsToUpload.size() > 0 && mStreamsToUpload.get(0) != null ||
+                uploadTextSnippet());
     }
 
     private boolean uploadTextSnippet() {
@@ -610,6 +611,9 @@ public class ReceiveExternalFilesActivity extends FileActivity
     private void onCreateFolderOperationFinish(CreateFolderOperation operation,
                                                RemoteOperationResult result) {
         if (result.isSuccess()) {
+            String remotePath = operation.getRemotePath().substring(0, operation.getRemotePath().length() - 1);
+            String newFolder = remotePath.substring(remotePath.lastIndexOf("/") + 1);
+            mParents.push(newFolder);
             populateDirectoryList();
         } else {
             try {
