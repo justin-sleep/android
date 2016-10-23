@@ -3,8 +3,7 @@
  *
  *   @author Andy Scherzinger
  *   Copyright (C) 2016 Andy Scherzinger
- *   Copyright (C) 2016 Nextcloud
- *   Copyright (C) 2016 ownCloud Inc.
+ *   Copyright (C) 2016 Nextcloud.
  *
  *   This program is free software; you can redistribute it and/or
  *   modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -198,7 +197,7 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
         };
 
         // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
     }
 
@@ -277,7 +276,7 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
                                 startActivity(participateIntent);
                                 break;
                             case R.id.drawer_menu_account_add:
-                                createAccount();
+                                createAccount(false);
                                 break;
                             case R.id.drawer_menu_account_manage:
                                 Intent manageAccountsIntent = new Intent(getApplicationContext(),
@@ -795,5 +794,18 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
             return String.valueOf(iv.getTag()).equals(tag);
         }
         return false;
+    }
+
+    /**
+     * Adds other listeners to react on changes of the drawer layout.
+     *
+     * @param listener      Object interested in changes of the drawer layout.
+     */
+    public void addDrawerListener(DrawerLayout.DrawerListener listener) {
+        if (mDrawerLayout != null) {
+            mDrawerLayout.addDrawerListener(listener);
+        } else {
+            Log_OC.e(TAG, "Drawer layout not ready to add drawer listener");
+        }
     }
 }

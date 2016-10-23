@@ -48,9 +48,10 @@ import com.owncloud.android.files.services.FileDownloader.FileDownloaderBinder;
 import com.owncloud.android.files.services.FileUploader.FileUploaderBinder;
 import com.owncloud.android.services.OperationsService.OperationsServiceBinder;
 import com.owncloud.android.ui.activity.ComponentsGetter;
+import com.owncloud.android.ui.fragment.OCFileListFragment;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.FileStorageUtils;
-import com.owncloud.android.utils.MimetypeIconUtil;
+import com.owncloud.android.utils.MimeTypeUtil;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -62,6 +63,7 @@ import java.util.Vector;
  */
 public class FileListListAdapter extends BaseAdapter implements FilterableListAdapter {
 
+    public static final int showFilenameColumnThreshold = 4;
     private Context mContext;
     private Vector<OCFile> mFilesAll = new Vector<OCFile>();
     private Vector<OCFile> mFiles = null;
@@ -71,16 +73,19 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
     private FileDataStorageManager mStorageManager;
     private Account mAccount;
     private ComponentsGetter mTransferServiceGetter;
+    private OCFileListFragment mListFragment;
 
     public FileListListAdapter(
             boolean justFolders,
             Context context,
-            ComponentsGetter transferServiceGetter
+            ComponentsGetter transferServiceGetter,
+            OCFileListFragment listFragment
     ) {
 
         mJustFolders = justFolders;
         mContext = context;
         mAccount = AccountUtils.getCurrentOwnCloudAccount(mContext);
+        mListFragment = listFragment;
 
         mTransferServiceGetter = transferServiceGetter;
 
@@ -144,7 +149,7 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
         // Find out which layout should be displayed
         ViewType viewType;
         if (parent instanceof GridView) {
-            if (file != null && (file.isImage() || file.isVideo())) {
+            if (file != null && (MimeTypeUtil.isImage(file) || MimeTypeUtil.isVideo(file))) {
                 viewType = ViewType.GRID_IMAGE;
             } else {
                 viewType = ViewType.GRID_ITEM;
@@ -200,8 +205,13 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
                 case GRID_ITEM:
                     // filename
                     fileName = (TextView) view.findViewById(R.id.Filename);
+
                     name = file.getFileName();
                     fileName.setText(name);
+
+                    if (mListFragment.getColumnSize() > showFilenameColumnThreshold && viewType == ViewType.GRID_ITEM){
+                        fileName.setVisibility(View.GONE);
+                    }
 
                 case GRID_IMAGE:
                     // sharedIcon
@@ -296,14 +306,14 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
 
             // No Folder
             if (!file.isFolder()) {
-                if ((file.isImage() || file.isVideo()) && file.getRemoteId() != null) {
+                if ((MimeTypeUtil.isImage(file) || MimeTypeUtil.isVideo(file)) && file.getRemoteId() != null) {
                     // Thumbnail in Cache?
                     Bitmap thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(
-                            String.valueOf(file.getRemoteId())
+                            "t" + String.valueOf(file.getRemoteId())
                     );
                     if (thumbnail != null && !file.needsUpdateThumbnail()) {
 
-                        if (file.isVideo()) {
+                        if (MimeTypeUtil.isVideo(file)) {
                             Bitmap withOverlay = ThumbnailsCacheManager.addVideoOverlay(thumbnail);
                             fileIcon.setImageBitmap(withOverlay);
                         } else {
@@ -317,7 +327,7 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
                                             fileIcon, mStorageManager, mAccount
                                     );
                             if (thumbnail == null) {
-                                if (file.isVideo()) {
+                                if (MimeTypeUtil.isVideo(file)) {
                                     thumbnail = ThumbnailsCacheManager.mDefaultVideo;
                                 } else {
                                     thumbnail = ThumbnailsCacheManager.mDefaultImg;
@@ -330,7 +340,7 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
                                     task
                                     );
                             fileIcon.setImageDrawable(asyncDrawable);
-                            task.execute(file);
+                            task.execute(file, true);
                         }
                     }
 
@@ -341,7 +351,7 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
 
 
                 } else {
-                    fileIcon.setImageResource(MimetypeIconUtil.getFileTypeIconId(file.getMimetype(),
+                    fileIcon.setImageResource(MimeTypeUtil.getFileTypeIconId(file.getMimetype(),
                             file.getFileName()));
                 }
 
@@ -349,7 +359,7 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
             } else {
                 // Folder
                 fileIcon.setImageResource(
-                        MimetypeIconUtil.getFolderTypeIconId(
+                        MimeTypeUtil.getFolderTypeIconId(
                                 file.isSharedWithMe() || file.isSharedWithSharee(),
                                 file.isSharedViaLink()
                         )

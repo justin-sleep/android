@@ -1,54 +1,86 @@
-## 1.3.1 (September 20, 2016)
+## 2016-10-19
+- Fix user info route (https://github.com/nextcloud/android-library/pull/21)
+- Begin debug logs when build type is debug #335
+- Account switcher optimizations #326
+- Fix TimSort #339
+- add preference to show hidden files #328
+- tune grid view of images #316
+- add grid view option when choosing a file from within the app #301
 
-- Move action hard to discover - difference between single/multi selection
-- Show move/copy context in toolbar title
-- Share file with dictadroid to Nextcloud
-- Don't show upload failure notification for already deleted files
+## 2016-10-06
+- put cursor close in finally block to make sure no resource leak occurrs #306
+- change wordings for davdroid integration #293
+- added logging to gain information about upload issues
+- Sorts favourite files first in list #302
+- Add open URL file feature #298
+- fix remove failed #241
+- Crash when sending non-existing log #284
+- Fix NPE in ExpandableUploadListAdapter...setText #290
+- change wordings for davdroid integration #293
+- Fix NullPointerException in PreviewMediaFragment. #295
 
-## 1.3.0 (September 17, 2016)
+## 2016-09-26
+- update fix crash in dismissLoadingDialog #279
+- fix crash when sending non-existing log #284
 
-- Files drop permission in share viewe
-- Display quota if configured/available in navigation drawer
-- Resume chunked uploads instead of complete restarts
-- Filter remote and local file lists
-- Simple integration with DAVdroid for calender and contacts sync
-- Mix folders and files on sort by date
-- Upload when charging option
-- Revamp upload options Move/Copy/Just-Upload
-- Text can be selected and shared to Nextcloud
-- Respect metered wifi and block instant uploads
-- Proper handling of .djvu files
-- Bugfixes and design improvements
+## 2016-09-22
+- update to latest 1.3.1 functionality
+- updated What's new #84
+- fix crash in dismissLoadingDialog #279
+- Provisioning Links to launch and prefill app with login data #248
+- fix remove failed #241 
 
-## 1.2.0 (July 29, 2016)
+## 2016-09-18
+- update to latest 1.3.0 functionality
+- change caption for move and copy action #265
 
-- Multi select capabilities
-- Confirmation dialog on account removal
-- Offline available filter in main menu
-- Sorting capability when choosing files to be uploaded
-- Video thumbnails if activated on server
-- Thumbnails during upload
-- Fixed user agent for file firewalling
-- Showing server side folder sizes
-- Text in test preview can now be selected
-- Search suggestions fixed for user/group search during sharing
-- Minor bugfixes
+## 2016-09-15
+- update to latest 1.3.0 RC2 functionality
+- What's new #84
 
-## 1.1.0 (July 6, 2016)
+## 2016-09-07
+- update Motivate more users #239
+- DAVdroid login screen prefilled launch #236
 
-- New main menu to switch accounts easily
-- Ability to open Nextcloud hosted files (read-only) from other apps that support the standard file chooser (requires Android 4.4 / KitKat or higher)
-- "Select all files" for upload within a folder
-- Optional feature to auto-create monthly folders for your instant uploads
-- Revamped login screen
-- Minor bugfixes
+## 2016-09-04
+- descend into folder after creating it in uploader #206
+- Motivate more users #239
 
-## 1.0.1 (June 20, 2016)
+## 2016-09-03
+- Display quota if configured/available in navigation drawer #204
+- bugfix for empty folder display #229
+- Update Toolchain/Android-Target to v24 #214
+- Restore display of remote folder size #235
 
-- Fix thumbnail preview support for new files
-- Add support for animated GIFs
-- Optimized uploader layout
+## 2016-08-08
+- update all PR
+- search for the right ocShare with public link #197
+- Fix comparator determining order of list of uploads #199
+- generate thumbnails only if mCurrentUpload is not null #205
 
-## 1.0.0 (June 12, 2016)
+## 2016-07-31
+- External SD support #92
+- move / copy updated #178
+- prevents NPE when selecting empty local folder #180
 
-- initial release of the Nextcloud Android app 
+## 2016-07-30
+- Upload when charging #171
+
+## 2016-07-28
+Fresh start on current master with these PRs:
+- Resized images #69
+- Instant upload in the context of multi account support #98
+- mix folders and files on sort by date #135
+- Files drop #141
+- Receive text file #142
+- Pinch zoom #143
+- Resize cache #144
+- filter for oc file list and local file list #152
+- djvu is not an image #153
+- delay instant upload when metered wifi is used #161
+- rename instant upload path #162
+- Refresh when app starts #166
+- Disable suggestions in password field #167
+- resume chunked uploads #168
+
+From now on every new PR with "3. to review" will be merged to beta and published 

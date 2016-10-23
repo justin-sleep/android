@@ -19,8 +19,6 @@
  */
 package com.owncloud.android.ui.preview;
 
-import java.lang.ref.WeakReference;
-
 import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -41,8 +39,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.files.FileMenuFilter;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.dialog.ConfirmationDialogFragment;
@@ -50,6 +50,9 @@ import com.owncloud.android.ui.dialog.RemoveFilesDialogFragment;
 import com.owncloud.android.ui.fragment.FileFragment;
 import com.owncloud.android.utils.BitmapUtils;
 import com.owncloud.android.utils.DisplayUtils;
+import com.owncloud.android.utils.MimeTypeUtil;
+
+import java.lang.ref.WeakReference;
 
 import third_parties.michaelOrtiz.TouchImageViewCustom;
 
@@ -69,10 +72,13 @@ public class PreviewImageFragment extends FileFragment {
 
     private static final String ARG_FILE = "FILE";
     private static final String ARG_IGNORE_FIRST = "IGNORE_FIRST";
+    private static final String ARG_SHOW_RESIZED_IMAGE = "SHOW_RESIZED_IMAGE";
 
     private TouchImageViewCustom mImageView;
     private TextView mMessageView;
     private ProgressBar mProgressWheel;
+
+    private Boolean mShowResizedImage = false;
 
     public Bitmap mBitmap = null;
 
@@ -97,11 +103,14 @@ public class PreviewImageFragment extends FileFragment {
      *                                  {@link FragmentStatePagerAdapter}
      *                                  ; TODO better solution
      */
-    public static PreviewImageFragment newInstance(OCFile imageFile, boolean ignoreFirstSavedState){
+    public static PreviewImageFragment newInstance(OCFile imageFile, boolean ignoreFirstSavedState,
+            boolean showResizedImage){
         PreviewImageFragment frag = new PreviewImageFragment();
+        frag.mShowResizedImage = showResizedImage;
         Bundle args = new Bundle();
         args.putParcelable(ARG_FILE, imageFile);
         args.putBoolean(ARG_IGNORE_FIRST, ignoreFirstSavedState);
+        args.putBoolean(ARG_SHOW_RESIZED_IMAGE, showResizedImage);
         frag.setArguments(args);
         return frag;
     }
@@ -134,6 +143,7 @@ public class PreviewImageFragment extends FileFragment {
             // not right now
 
         mIgnoreFirstSavedState = args.getBoolean(ARG_IGNORE_FIRST);
+        mShowResizedImage = args.getBoolean(ARG_SHOW_RESIZED_IMAGE);
         setHasOptionsMenu(true);
     }
 
@@ -179,9 +189,6 @@ public class PreviewImageFragment extends FileFragment {
         if (getFile() == null) {
             throw new IllegalStateException("Instanced with a NULL OCFile");
         }
-        if (!getFile().isDown()) {
-            throw new IllegalStateException("There is no local file to preview");
-        }
     }
 
 
@@ -199,10 +206,56 @@ public class PreviewImageFragment extends FileFragment {
     public void onStart() {
         super.onStart();
         if (getFile() != null) {
-            mLoadBitmapTask = new LoadBitmapTask(mImageView, mMessageView, mProgressWheel);
-            //mLoadBitmapTask.execute(new String[]{getFile().getStoragePath()});
-//            mLoadBitmapTask.execute(getFile().getStoragePath());
-            mLoadBitmapTask.execute(getFile());
+            mImageView.setTag(getFile().getFileId());
+
+            if (mShowResizedImage){
+                Bitmap resizedImage = ThumbnailsCacheManager.getBitmapFromDiskCache(
+                        String.valueOf("r" + getFile().getRemoteId()));
+
+                if (resizedImage != null && !getFile().needsUpdateThumbnail()){
+                    mProgressWheel.setVisibility(View.GONE);
+                    mImageView.setImageBitmap(resizedImage);
+                    mImageView.setVisibility(View.VISIBLE);
+                    mBitmap  = resizedImage;
+                } else {
+                    // show thumbnail while loading resized image
+                    Bitmap thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(
+                            String.valueOf("t" + getFile().getRemoteId()));
+
+                    if (thumbnail != null){
+                        mImageView.setImageBitmap(thumbnail);
+                        mProgressWheel.setVisibility(View.VISIBLE);
+                        mImageView.setVisibility(View.VISIBLE);
+                        mBitmap = thumbnail;
+                    } else {
+                        thumbnail = ThumbnailsCacheManager.mDefaultImg;
+                    }
+
+                    // generate new resized image
+                    if (ThumbnailsCacheManager.cancelPotentialThumbnailWork(getFile(), mImageView) &&
+                        mContainerActivity.getStorageManager() != null) {
+                        final ThumbnailsCacheManager.ThumbnailGenerationTask task =
+                                new ThumbnailsCacheManager.ThumbnailGenerationTask(
+                                        mImageView, mContainerActivity.getStorageManager(),
+                                        mContainerActivity.getStorageManager().getAccount(),
+                                        mProgressWheel);
+                        if (resizedImage == null) {
+                            resizedImage = thumbnail;
+                        }
+                        final ThumbnailsCacheManager.AsyncThumbnailDrawable asyncDrawable =
+                                new ThumbnailsCacheManager.AsyncThumbnailDrawable(
+                                        MainApp.getAppContext().getResources(),
+                                        resizedImage,
+                                        task
+                                );
+                        mImageView.setImageDrawable(asyncDrawable);
+                        task.execute(getFile(), false);
+                    }
+            }
+            } else {
+                mLoadBitmapTask = new LoadBitmapTask(mImageView, mMessageView, mProgressWheel);
+                mLoadBitmapTask.execute(getFile());
+            }
         }
     }
 
@@ -303,9 +356,15 @@ public class PreviewImageFragment extends FileFragment {
                 return true;
             }
             case R.id.action_send_file: {
-                mContainerActivity.getFileOperationsHelper().sendDownloadedFile(getFile());
-                return true;
+                if (MimeTypeUtil.isImage(getFile()) && !getFile().isDown()){
+                    mContainerActivity.getFileOperationsHelper().sendCachedImage(getFile());
+                    return true;
+                } else {
+                    mContainerActivity.getFileOperationsHelper().sendDownloadedFile(getFile());
+                    return true;
+                }
             }
+            case R.id.action_download_file:
             case R.id.action_sync_file: {
                 mContainerActivity.getFileOperationsHelper().syncFile(getFile());
                 return true;
@@ -551,7 +610,7 @@ public class PreviewImageFragment extends FileFragment {
      * @return          'True' if the file can be handled by the fragment.
      */
     public static boolean canBePreviewed(OCFile file) {
-        return (file != null && file.isImage());
+        return (file != null && MimeTypeUtil.isImage(file));
     }
 
 

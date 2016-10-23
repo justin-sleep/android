@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Beta indicator -->
+    <bool name="is_beta">false</bool>
+
     <!-- App name  and other strings-->
     <string name="app_name">quarterfull</string>
     <string name="account_type">quarterfull.com</string>	<!-- better if was a domain name; but changing it now would require
     migrate accounts when the app is updated -->
-    <string name="authority">org.nextcloud</string>	<!-- better if was the app package with ".provider" appended ; it identifies the provider -->
-    <string name="document_provider_authority">org.nextcloud.documents</string>
+    <string name="authority">com.quarterfull.android.provider</string>	<!-- better if was the app package with ".provider" appended ; it identifies the provider -->
+    <string name="authorityCache">com.quarterfull.android.imageCache.provider</string>
+    <string name="document_provider_authority">com.quarterfull.android.documents</string>
+    <string name="authoritySearch">com.quarterfull.android.android.providers.UsersAndGroupsSearchProvider</string>
+    <string name="file_provider_authority">com.quarterfull.android.files</string>
     <string name ="db_file">quarterfull.db</string>
     <string name ="db_name">quarterfull</string>
     <string name ="data_folder">quarterfull</string>
@@ -17,7 +23,7 @@
     <string name="server_url">https://quarterfull.com/cloud</string>
     <bool name="show_server_url_input">true</bool>
     <bool name="show_welcome_link">true</bool>
-	<string name="welcome_link_url">"https://nextcloud.com"</string>
+	<string name="welcome_link_url">"https://nextcloud.com/mobile/new"</string>
 	<string name="share_api_link"></string>
     
     <!-- Flags to setup the authentication methods available in the app -->
@@ -61,8 +67,10 @@
     <bool name="imprint_enabled">false</bool> 
     <bool name="recommend_enabled">true</bool>
     <bool name="feedback_enabled">true</bool>
-    <bool name="logger_enabled">false</bool>
+    <bool name="logger_enabled">true</bool>
     <string name="url_help">https://help.nextcloud.com/c/feature</string>
+    <string name="beta_link">https://github.com/nextcloud/android/raw/beta/apks/nextcloud-beta-</string>
+    <string name="beta_latest">https://github.com/nextcloud/android/raw/beta/apks/latest</string>
     <string name="url_imprint"></string>
     <string name="mail_recommend">"mailto:"</string>
     <string name="mail_feedback">"mailto:admin@quarterfull.com"</string>

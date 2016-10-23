@@ -68,7 +68,7 @@ public class UploadFilesActivity extends FileActivity implements
     private boolean mSelectAll = false;
     private LocalFileListFragment mFileListFragment;
     private Button mCancelBtn;
-    private Button mUploadBtn;
+    protected Button mUploadBtn;
     private Spinner mBehaviourSpinner;
     private Account mAccountOnCreation;
     private DialogFragment mCurrentDialog;
@@ -210,7 +210,7 @@ public class UploadFilesActivity extends FileActivity implements
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.actionbar_sort_title)
-                        .setSingleChoiceItems(R.array.actionbar_sortby, sortOrder ,
+                        .setSingleChoiceItems(R.array.menu_items_sort_by_options, sortOrder ,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         switch (which){

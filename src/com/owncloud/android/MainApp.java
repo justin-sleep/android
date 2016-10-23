@@ -23,17 +23,22 @@ package com.owncloud.android;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
+import android.preference.PreferenceManager;
 
 import com.owncloud.android.authentication.PassCodeManager;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory.Policy;
 import com.owncloud.android.lib.common.utils.Log_OC;
-
+import com.owncloud.android.ui.activity.WhatsNewActivity;
+import com.owncloud.android.utils.ExceptionHandler;
+import com.owncloud.android.ui.activity.Preferences;
 
 /**
  * Main Application of the project
@@ -54,13 +59,24 @@ public class MainApp extends Application {
 
     private static Context mContext;
 
+    private static String storagePath;
+
     private static boolean mOnlyOnDevice = false;
 
     
     public void onCreate(){
         super.onCreate();
         MainApp.mContext = getApplicationContext();
-        
+
+        // Setup handler for uncaught exceptions.
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+
+
+        SharedPreferences appPrefs =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        MainApp.storagePath = appPrefs.getString(Preferences.Keys.STORAGE_PATH, Environment.
+                              getExternalStorageDirectory().getAbsolutePath());
+
         boolean isSamlAuth = AUTH_ON.equals(getString(R.string.auth_method_saml_web_sso));
 
         OwnCloudClientManagerFactory.setUserAgent(getUserAgent());
@@ -72,18 +88,15 @@ public class MainApp extends Application {
 
         // initialise thumbnails cache on background thread
         new ThumbnailsCacheManager.InitDiskCacheTask().execute();
-        
-        if (BuildConfig.DEBUG) {
 
-            String dataFolder = getDataFolder();
 
-            // Set folder for store logs
-            Log_OC.setLogDataFolder(dataFolder);
+        String dataFolder = getDataFolder() + getAppContext().getResources().getString(R.string.log_name);
 
-            //TODO: to be changed/fixed whenever SD card support gets merged.
-            Log_OC.startLogging(Environment.getExternalStorageDirectory().getAbsolutePath());
-            Log_OC.d("Debug", "start logging");
-        }
+        // Set folder for store logs
+        Log_OC.setLogDataFolder(dataFolder);
+
+        Log_OC.startLogging(MainApp.storagePath);
+        Log_OC.d("Debug", "start logging");
 
         // register global protection with pass code
         registerActivityLifecycleCallbacks( new ActivityLifecycleCallbacks() {
@@ -91,6 +104,7 @@ public class MainApp extends Application {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 Log_OC.d(activity.getClass().getSimpleName(),  "onCreate(Bundle) starting" );
+                WhatsNewActivity.runIfNeeded(activity);
                 PassCodeManager.getPassCodeManager().onActivityCreated(activity);
             }
 
@@ -132,14 +146,33 @@ public class MainApp extends Application {
         return MainApp.mContext;
     }
 
-    // Methods to obtain Strings referring app_name 
+    public static String getStoragePath(){
+        return MainApp.storagePath;
+    }
+
+    public static void setStoragePath(String path){
+        MainApp.storagePath = path;
+    }
+
+    // Methods to obtain Strings referring app_name
     //   From AccountAuthenticator 
     //   public static final String ACCOUNT_TYPE = "owncloud";    
     public static String getAccountType() {
         return getAppContext().getResources().getString(R.string.account_type);
     }
 
-    //  From AccountAuthenticator 
+    // Non gradle build systems do not provide BuildConfig.VERSION_CODE
+    // so we must fallback to this method :(
+    public static int getVersionCode() {
+        try {
+            String thisPackageName = getAppContext().getPackageName();
+            return getAppContext().getPackageManager().getPackageInfo(thisPackageName, 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            return 0;
+        }
+    }
+
+    //  From AccountAuthenticator
     //  public static final String AUTHORITY = "org.owncloud";
     public static String getAuthority() {
         return getAppContext().getResources().getString(R.string.authority);

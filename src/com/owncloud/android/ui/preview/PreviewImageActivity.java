@@ -57,6 +57,7 @@ import com.owncloud.android.operations.SynchronizeFileOperation;
 import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.fragment.FileFragment;
+import com.owncloud.android.utils.MimeTypeUtil;
 
 
 /**
@@ -390,11 +391,6 @@ public class PreviewImageActivity extends FileActivity implements
             OCFile currentFile = mPreviewImagePagerAdapter.getFileAt(position); 
             getSupportActionBar().setTitle(currentFile.getFileName());
             setDrawerIndicatorEnabled(false);
-            if (!currentFile.isDown()) {
-                if (!mPreviewImagePagerAdapter.pendingErrorAt(position)) {
-                    requestForDownload(currentFile);
-                }
-            }
 
             // Call to reset image zoom to initial state
             ((PreviewImagePagerAdapter) mViewPager.getAdapter()).resetZoom();
@@ -514,7 +510,7 @@ public class PreviewImageActivity extends FileActivity implements
             if (file == null) {
                 throw new IllegalStateException("Instanced with a NULL OCFile");
             }
-            if (!file.isImage()) {
+            if (!MimeTypeUtil.isImage(file)) {
                 throw new IllegalArgumentException("Non-image file passed as argument");
             }
             

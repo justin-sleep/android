@@ -20,23 +20,52 @@
 
 package com.owncloud.android.utils;
 
-import android.accounts.Account;
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Environment;
-import android.os.StatFs;
-import android.preference.PreferenceManager;
-import android.webkit.MimeTypeMap;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Vector;
+
+import third_parties.daveKoeller.AlphanumComparator;
 
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.RemoteFile;
+import com.owncloud.android.ui.activity.Preferences;
+
+import android.accounts.Account;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.net.Uri;
+import android.os.StatFs;
+import android.preference.PreferenceManager;
+import android.webkit.MimeTypeMap;
+
+import com.owncloud.android.MainApp;
+import com.owncloud.android.R;
+import com.owncloud.android.authentication.AccountUtils;
+import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.lib.common.utils.Log_OC;
+import com.owncloud.android.lib.resources.files.RemoteFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,22 +92,9 @@ public class FileStorageUtils {
     public static Boolean mSortAscending = true;
 
     /**
-     * Takes a full path to owncloud file and removes beginning which is path to ownload data folder.
-     * If fullPath does not start with that folder, fullPath is returned as is.
-     */
-    public static final String removeDataFolderPath(String fullPath) {
-        File sdCard = Environment.getExternalStorageDirectory();
-        String dataFolderPath = sdCard.getAbsolutePath() + "/" + MainApp.getDataFolder() + "/";
-        if(fullPath.indexOf(dataFolderPath) == 0) {
-            return fullPath.substring(dataFolderPath.length());
-        }
-        return fullPath;
-    }
-    
-    /**
      * Get local owncloud storage path for accountName.
      */
-    public static final String getSavePath(String accountName) {
+    public static String getSavePath(String accountName) {
         File sdCard = Environment.getExternalStorageDirectory();
         return sdCard.getAbsolutePath() + "/" + MainApp.getDataFolder() + "/" + Uri.encode(accountName, "@");
         // URL encoding is an 'easy fix' to overcome that NTFS and FAT32 don't allow ":" in file names,
@@ -90,14 +106,14 @@ public class FileStorageUtils {
      * corresponding local path (in local owncloud storage) to remote uploaded
      * file.
      */
-    public static final String getDefaultSavePathFor(String accountName, OCFile file) {
+    public static String getDefaultSavePathFor(String accountName, OCFile file) {
         return getSavePath(accountName) + file.getRemotePath();
     }
 
     /**
      * Get absolute path to tmp folder inside datafolder in sd-card for given accountName.
      */
-    public static final String getTemporalPath(String accountName) {
+    public static String getTemporalPath(String accountName) {
         File sdCard = Environment.getExternalStorageDirectory();
         return sdCard.getAbsolutePath() + "/" + MainApp.getDataFolder() + "/tmp/" + Uri.encode(accountName, "@");
             // URL encoding is an 'easy fix' to overcome that NTFS and FAT32 don't allow ":" in file names,
@@ -106,11 +122,12 @@ public class FileStorageUtils {
 
     /**
      * Optimistic number of bytes available on sd-card. accountName is ignored.
+     *
      * @param accountName not used. can thus be null.
      * @return Optimistic number of available bytes (can be less)
      */
     @SuppressLint("NewApi")
-    public static final long getUsableSpace(String accountName) {
+    public static long getUsableSpace(String accountName) {
         File savePath = Environment.getExternalStorageDirectory();
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD) {
             return savePath.getUsableSpace();
@@ -122,7 +139,7 @@ public class FileStorageUtils {
 
     }
     
-    public static final String getLogPath()  {
+    public static String getLogPath()  {
         return Environment.getExternalStorageDirectory() + File.separator + MainApp.getDataFolder() + File.separator + "log";
     }
 
@@ -271,21 +288,21 @@ public class FileStorageUtils {
 
         return files;
     }
-    
+
     /**
      * Sorts list by Date
      * @param files
      */
     public static Vector<OCFile> sortOCFilesByDate(Vector<OCFile> files){
         final int multiplier = mSortAscending ? 1 : -1;
-        
+
         Collections.sort(files, new Comparator<OCFile>() {
             public int compare(OCFile o1, OCFile o2) {
             Long obj1 = o1.getModificationTimestamp();
             return multiplier * obj1.compareTo(o2.getModificationTimestamp());
             }
         });
-        
+
         return files;
     }
 
@@ -441,13 +458,11 @@ public class FileStorageUtils {
     public static long getFolderSize(File dir) {
         if (dir.exists()) {
             long result = 0;
-            File[] fileList = dir.listFiles();
-            for(int i = 0; i < fileList.length; i++) {
-                if(fileList[i].isDirectory()) {
-                    result += getFolderSize(fileList[i]);
-                } else {
-                    result += fileList[i].length();
-                }
+            for (File f : dir.listFiles()) {
+                if (f.isDirectory())
+                    result += getFolderSize(f);
+                else
+                    result += f.length();
             }
             return result;
         }
@@ -495,6 +510,38 @@ public class FileStorageUtils {
                 file.setLastSyncDateForData(f.lastModified());
             }
         }
+    }
+
+    public static boolean copyFile(File src, File target) {
+        boolean ret = true;
+
+        InputStream in = null;
+        OutputStream out = null;
+
+        try {
+            in = new FileInputStream(src);
+            out = new FileOutputStream(target);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+        } catch (IOException ex) {
+            ret = false;
+        } finally {
+            if (in != null) try {
+                in.close();
+            } catch (IOException e) {
+                Log_OC.e(TAG, "Error closing input stream during copy", e);
+            }
+            if (out != null) try {
+                out.close();
+            } catch (IOException e) {
+                Log_OC.e(TAG, "Error closing output stream during copy", e);
+            }
+        }
+
+        return ret;
     }
 
 }
