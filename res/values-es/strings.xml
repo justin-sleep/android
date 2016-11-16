@@ -38,6 +38,8 @@
     <string name="prefs_log_summary_history">Esto muestra los registros grabados</string>
     <string name="prefs_log_delete_history_button">Eliminar Historial</string>
     <string name="prefs_calendar_contacts">Sincronizar calendario &amp; contactos</string>
+    <string name="prefs_calendar_contacts_summary">Configurar DAVdroid (v1.3.0 +) de la cuenta actual</string>
+    <string name="prefs_calendar_contacts_address_resolve_error">La dirección del Servidor para su cuenta no ha podido ser resuelta por DAVdroid</string>
     <string name="prefs_calendar_contacts_no_store_error">No esta instalado ni la aplicación de Google Play o F-Droid</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Calendario &amp; contactos se ha sincronizado exitosamente</string>
     <string name="prefs_help">Ayuda</string>
@@ -417,7 +419,6 @@
     <string name="pref_behaviour_entries_keep_file">dejado en la carpeta original</string>
     <string name="pref_behaviour_entries_move">movido a la carpeta apps</string>
     <string name="pref_behaviour_entries_delete_file">borrado</string>
-
     <string name="share_dialog_title">Compartiendo</string>
     <string name="share_file">Compartir %1$s</string>
     <string name="share_with_user_section_title">Compartir con usuarios y grupos</string>
@@ -480,4 +481,4 @@
         <item quantity="other">%d seleccionados</item>
     </plurals>
 
-</resources>
+    </resources>

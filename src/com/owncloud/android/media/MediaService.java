@@ -21,25 +21,30 @@
 package com.owncloud.android.media;
 
 import android.accounts.Account;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.WifiLock;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.lib.common.accounts.AccountUtils;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
@@ -65,10 +70,10 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
     public static final String ACTION_PLAY_FILE = MY_PACKAGE + ".action.PLAY_FILE";
     public static final String ACTION_STOP_ALL = MY_PACKAGE + ".action.STOP_ALL";
 
-    /// Keys to add extras to the action
+    /// PreferenceKeys to add extras to the action
     public static final String EXTRA_FILE = MY_PACKAGE + ".extra.FILE";
     public static final String EXTRA_ACCOUNT = MY_PACKAGE + ".extra.ACCOUNT";
-    public static String EXTRA_START_POSITION = MY_PACKAGE + ".extra.START_POSITION";
+    public static final String EXTRA_START_POSITION = MY_PACKAGE + ".extra.START_POSITION";
     public static final String EXTRA_PLAY_ON_LOAD = MY_PACKAGE + ".extra.PLAY_ON_LOAD";
 
 
@@ -212,6 +217,25 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
             messageId = R.string.media_err_unknown;
         }
         return context.getString(messageId);
+    }
+
+    public static AlertDialog.Builder streamWithExternalApp(final Uri uri, final Activity activity){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(activity.getString(R.string.stream_expose_password))
+                .setPositiveButton(activity.getString(R.string.common_yes),
+                                   new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Intent i = new Intent(Intent.ACTION_VIEW);
+                                            i.setData(uri);
+                                            activity.startActivity(i);
+                                        }
+                                    })
+                .setNegativeButton(activity.getString(R.string.common_no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        return builder;
     }
 
 
@@ -435,12 +459,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         releaseResources(false); // release everything except MediaPlayer
 
         try {
-            if (mFile == null) { 
-                Toast.makeText(this, R.string.media_err_nothing_to_play, Toast.LENGTH_LONG).show();
-                processStopRequest(true);
-                return;
-                
-            } else if (mAccount == null) {
+            if (mAccount == null) {
                 Toast.makeText(this, R.string.media_err_not_in_owncloud, Toast.LENGTH_LONG).show();
                 processStopRequest(true);
                 return;
@@ -449,12 +468,12 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
             createMediaPlayerIfNeeded();
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             String url = mFile.getStoragePath();
-            /* Streaming is not possible right now
+
             if (url == null || url.length() <= 0) {
                 url = AccountUtils.constructFullURLForAccount(this, mAccount) + mFile.getRemotePath();
             }
             mIsStreaming = url.startsWith("http:") || url.startsWith("https:");
-            */
+
             mIsStreaming = false;
             
             mPlayer.setDataSource(url);
@@ -495,6 +514,8 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
             Toast.makeText(this, String.format(getString(R.string.media_err_unexpected), mFile.getFileName()),
                     Toast.LENGTH_LONG).show();
             processStopRequest(true);
+        } catch (AccountUtils.AccountNotFoundException e) {
+            Log_OC.e(TAG, "playMedia - Account missing",e);
         }
     }
 
@@ -621,16 +642,18 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
             // focus gain; check AudioManager.AUDIOFOCUS_* values
             mAudioFocus = AudioFocus.FOCUS;
             // restart media player with new focus settings
-            if (mState == State.PLAYING)
+            if (mState == State.PLAYING) {
                 configAndStartMediaPlayer();
+            }
             
         } else if (focusChange < 0) {
             // focus loss; check AudioManager.AUDIOFOCUS_* values
             boolean canDuck = AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK == focusChange;
                 mAudioFocus = canDuck ? AudioFocus.NO_FOCUS_CAN_DUCK : AudioFocus.NO_FOCUS;
                 // start/restart/pause media player with new focus settings
-                if (mPlayer != null && mPlayer.isPlaying())
+                if (mPlayer != null && mPlayer.isPlaying()) {
                     configAndStartMediaPlayer();
+                }
         }
         
     }

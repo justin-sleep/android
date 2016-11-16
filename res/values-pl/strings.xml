@@ -28,6 +28,7 @@
     <string name="prefs_accounts">Konta</string>
     <string name="prefs_manage_accounts">Zarządzaj kontami</string>
     <string name="prefs_passcode">Blokada hasłem</string>
+    <string name="prefs_show_hidden_files">Pokaż ukryte pliki</string>
     <string name="prefs_instant_upload">Natychmiastowa wysyłka obrazów</string>
     <string name="prefs_instant_upload_summary">Wysyłaj od razu zdjęcia zrobione aparatem</string>
     <string name="prefs_instant_video_upload">Natychmiastowa wysyłka wideo</string>
@@ -421,7 +422,6 @@
     <string name="pref_behaviour_entries_keep_file">zachowany w oryginalnym folderze</string>
     <string name="pref_behaviour_entries_move">przeniesiony do folderu aplikacji</string>
     <string name="pref_behaviour_entries_delete_file">usunięty</string>
-
     <string name="share_dialog_title">Udostępnianie</string>
     <string name="share_file">Współdziel %1$s</string>
     <string name="share_with_user_section_title">Współdziel z użytkownikami i grupami</string>
@@ -482,6 +482,7 @@
     <string name="participate_testing_version_text">Chcesz pomóc nam testować następną wersję?</string>
     <string name="participate_beta_headline">Testuj wersję Beta</string>
     <string name="participate_release_candidate_headline">Wydanie kandydujące</string>
+    <string name="participate_release_candidate_text">Release Candidate (RC) jest zarysem nadchodzącego wydania i oczekujemy że będzie stabilne. Testowanie indywidualnej konfiguracji może pomóc, aby to zapewnić. Zapisz się do testowania w sklepie Play lub ręcznie szukaj w sekcji \"wersje\" na F-Droid.</string>
     <string name="participate_contribute_headline">Aktywni członkowie projektu</string>
     <string name="participate_contribute_irc_text">Dołącz do chatu (IRC): &lt;a href=\"%1$s\">#nextcloud-mobile&lt;/a></string>
     <string name="participate_contribute_forum_text">Pomoż innym na &lt;a href=\"%1$s>forum&lt;/a></string>
@@ -495,4 +496,4 @@
         <item quantity="other">%d zaznaczonych</item>
     </plurals>
 
-</resources>
+    </resources>

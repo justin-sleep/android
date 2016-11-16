@@ -22,9 +22,11 @@
  */
 package com.owncloud.android.ui.fragment;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -52,6 +54,7 @@ import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.FileMenuFilter;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.status.OwnCloudVersion;
+import com.owncloud.android.media.MediaService;
 import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.activity.FolderPickerActivity;
@@ -94,7 +97,7 @@ public class OCFileListFragment extends ExtendedListFragment {
 
     private static final String GRID_IS_PREFERED_PREFERENCE = "gridIsPrefered";
 
-    private static String DIALOG_CREATE_FOLDER = "DIALOG_CREATE_FOLDER";
+    private static final String DIALOG_CREATE_FOLDER = "DIALOG_CREATE_FOLDER";
 
     private FileFragment.ContainerActivity mContainerActivity;
 
@@ -587,7 +590,7 @@ public class OCFileListFragment extends ExtendedListFragment {
             }   // exit is granted because storageManager.getFileByPath("/") never returns null
             mFile = parentDir;
 
-            listDirectory(mFile, MainApp.getOnlyOnDevice());
+            listDirectory(mFile, MainApp.isOnlyOnDevice());
 
             onRefresh(false);
 
@@ -605,7 +608,7 @@ public class OCFileListFragment extends ExtendedListFragment {
         if (file != null) {
             if (file.isFolder()) {
                 // update state and view of this fragment
-                listDirectory(file, MainApp.getOnlyOnDevice());
+                listDirectory(file, MainApp.isOnlyOnDevice());
                 // then, notify parent activity to let it update its state and view
                 mContainerActivity.onBrowsedDownTo(file);
                 // save index and top position
@@ -617,15 +620,13 @@ public class OCFileListFragment extends ExtendedListFragment {
                     ((FileDisplayActivity)mContainerActivity).startImagePreview(file);
                 } else if (PreviewTextFragment.canBePreviewed(file)){
                     ((FileDisplayActivity)mContainerActivity).startTextPreview(file);
-                } else if (file.isDown()) {
-                    if (PreviewMediaFragment.canBePreviewed(file)) {
+                } else if (PreviewMediaFragment.canBePreviewed(file)) {
                         // media preview
                         ((FileDisplayActivity) mContainerActivity).startMediaPreview(file, 0, true);
-                    } else {
+                    } else if (file.isDown()) {
                         mContainerActivity.getFileOperationsHelper().openFile(file);
                     }
-
-                } else {
+                else {
                     // automatic download, preview on finish
                     ((FileDisplayActivity) mContainerActivity).startDownloadForPreview(file);
                 }
@@ -646,7 +647,9 @@ public class OCFileListFragment extends ExtendedListFragment {
      */
     public boolean onFileActionChosen(int menuId) {
         final ArrayList<OCFile> checkedFiles = mAdapter.getCheckedItems(getListView());
-        if (checkedFiles.size() <= 0) return false;
+        if (checkedFiles.size() <= 0) {
+            return false;
+        }
 
         if (checkedFiles.size() == 1) {
             /// action only possible on a single file
@@ -681,6 +684,14 @@ public class OCFileListFragment extends ExtendedListFragment {
                     } else {
                         mContainerActivity.getFileOperationsHelper().sendDownloadedFile(singleFile);
                     }
+                    return true;
+                }
+                case R.id.action_stream_file: {
+                    Account account = ((FileActivity)mContainerActivity).getAccount();
+                    Context context = MainApp.getAppContext();
+                    Uri uri = PreviewMediaFragment.generateUrlWithCredentials(account, context, singleFile);
+                    MediaService.streamWithExternalApp(uri, getActivity()).show();
+
                     return true;
                 }
             }
@@ -746,7 +757,7 @@ public class OCFileListFragment extends ExtendedListFragment {
     }
 
     public void refreshDirectory(){
-        listDirectory(getCurrentFile(), MainApp.getOnlyOnDevice());
+        listDirectory(getCurrentFile(), MainApp.isOnlyOnDevice());
     }
 
     /**
@@ -766,7 +777,9 @@ public class OCFileListFragment extends ExtendedListFragment {
                     directory = mFile;
                 } else {
                     directory = storageManager.getFileByPath("/");
-                    if (directory == null) return; // no files, wait for sync
+                    if (directory == null) {
+                        return; // no files, wait for sync
+                    }
                 }
             }
 

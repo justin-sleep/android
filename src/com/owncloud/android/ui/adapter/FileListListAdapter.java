@@ -117,15 +117,17 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
 
     @Override
     public Object getItem(int position) {
-        if (mFiles == null || mFiles.size() <= position)
+        if (mFiles == null || mFiles.size() <= position) {
             return null;
+        }
         return mFiles.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        if (mFiles == null || mFiles.size() <= position)
+        if (mFiles == null || mFiles.size() <= position) {
             return 0;
+        }
         return mFiles.get(position).getFileId();
     }
 
@@ -309,7 +311,7 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
                 if ((MimeTypeUtil.isImage(file) || MimeTypeUtil.isVideo(file)) && file.getRemoteId() != null) {
                     // Thumbnail in Cache?
                     Bitmap thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(
-                            "t" + String.valueOf(file.getRemoteId())
+                            "t" + file.getRemoteId()
                     );
                     if (thumbnail != null && !file.needsUpdateThumbnail()) {
 
@@ -394,7 +396,7 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
      */
     public void swapDirectory(OCFile directory, FileDataStorageManager updatedStorageManager
             , boolean onlyOnDevice) {
-        if (updatedStorageManager != null && updatedStorageManager != mStorageManager) {
+        if (updatedStorageManager != null && !updatedStorageManager.equals(mStorageManager)) {
             mStorageManager = updatedStorageManager;
             mAccount = AccountUtils.getCurrentOwnCloudAccount(mContext);
         }
@@ -404,18 +406,15 @@ public class FileListListAdapter extends BaseAdapter implements FilterableListAd
             if (mJustFolders) {
                 mFiles = getFolders(mFiles);
             }
-
             if (!mShowHiddenFiles) {
                 mFiles = filterHiddenFiles(mFiles);
             }
+            mFiles = FileStorageUtils.sortOcFolder(mFiles);
+            mFilesAll.addAll(mFiles);
         } else {
             mFiles = null;
+            mFilesAll.clear();
         }
-
-        mFiles = FileStorageUtils.sortOcFolder(mFiles);
-
-        mFilesAll.clear();
-        mFilesAll.addAll(mFiles);
 
         notifyDataSetChanged();
     }

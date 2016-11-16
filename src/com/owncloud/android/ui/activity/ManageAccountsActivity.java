@@ -75,8 +75,6 @@ public class ManageAccountsActivity extends FileActivity
     private final Handler mHandler = new Handler();
     private String mAccountName;
     private AccountListAdapter mAccountListAdapter;
-    protected FileUploader.FileUploaderBinder mUploaderBinder = null;
-    protected FileDownloader.FileDownloaderBinder mDownloaderBinder = null;
     private ServiceConnection mDownloadServiceConnection, mUploadServiceConnection = null;
     Set<String> mOriginalAccounts;
     String mOriginalCurrentAccount;
@@ -104,7 +102,7 @@ public class ManageAccountsActivity extends FileActivity
         setAccount(AccountUtils.getCurrentOwnCloudAccount(this));
         onAccountSet(false);
 
-        mAccountListAdapter = new AccountListAdapter(this, getAccountListItems(),mTintedCheck);
+        mAccountListAdapter = new AccountListAdapter(this, getAccountListItems(), mTintedCheck);
 
         mListView.setAdapter(mAccountListAdapter);
 
@@ -328,12 +326,6 @@ public class ManageAccountsActivity extends FileActivity
     }
 
     public Handler getHandler() { return mHandler; }
-
-    // Methods for ComponentsGetter
-    @Override
-    public FileDownloader.FileDownloaderBinder getFileDownloaderBinder() {
-        return mDownloaderBinder;
-    }
 
     @Override
     public FileUploader.FileUploaderBinder getFileUploaderBinder() {

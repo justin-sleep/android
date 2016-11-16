@@ -37,6 +37,8 @@
     <string name="prefs_log_title_history">Zgodovina beleženja</string>
     <string name="prefs_log_summary_history">Pokaže shranjene dnevnike</string>
     <string name="prefs_log_delete_history_button">Izbriši zgodovino</string>
+    <string name="prefs_calendar_contacts">Nastavi sinhronizacijo koledarja in kontaktov</string>
+    <string name="prefs_calendar_contacts_summary">Nastavi DAVdroid (v1.3.0+) za trenutno uporabljen račun</string>
     <string name="prefs_calendar_contacts_address_resolve_error">Naslov strežnika za račun ne more biti razrešena za DAVdroid</string>
     <string name="prefs_calendar_contacts_no_store_error">Ne Google Play, ne F-Droid nista nameščena</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Sinhronizacija koledarja in kontaktov uspešno nastavljena</string>
@@ -418,7 +420,6 @@
     <string name="pref_behaviour_entries_keep_file">ohrani v izvorni mapi</string>
     <string name="pref_behaviour_entries_move">premakni v mapo programa</string>
     <string name="pref_behaviour_entries_delete_file">pobrisano</string>
-
     <string name="share_dialog_title">Souporaba</string>
     <string name="share_file">Omogoči souporabo %1$s</string>
     <string name="share_with_user_section_title">Omogoči souporabo s skupino ali z uporabnikom</string>
@@ -490,4 +491,4 @@
         <item quantity="other">%d izbranih</item>
     </plurals>
 
-</resources>
+    </resources>
